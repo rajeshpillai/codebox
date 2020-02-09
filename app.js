@@ -24,7 +24,8 @@ function compile() {
   var js = document.getElementById("js");
   var code = document.getElementById("code").contentWindow.document;
 
-  var onKeyup = debounce(function() {
+  var onKeyup = debounce(function(e) {
+    console.log(e.keyCode);
     code.open();
     code.writeln(`
       ${html.value} 
@@ -43,7 +44,12 @@ function compile() {
   }, 250);
 
 
-  document.body.onkeyup = onKeyup;
+  document.body.onkeyup = (e) => {
+    if (e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40) {
+      return;
+    }
+    onKeyup(e);
+  }
 }
 
 compile();
